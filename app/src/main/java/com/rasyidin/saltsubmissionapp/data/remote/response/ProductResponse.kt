@@ -22,7 +22,7 @@ data class ProductResponse(
     fun toProduct() = Product(
         id = id,
         title = title,
-        description = "",
+        stock = stock,
         price = price
     )
 }
