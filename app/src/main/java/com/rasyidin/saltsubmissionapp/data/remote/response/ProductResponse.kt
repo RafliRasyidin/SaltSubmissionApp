@@ -21,7 +21,7 @@ data class ProductResponse(
 ) {
     fun toProduct() = Product(
         id = id,
-        title = title,
+        name = title,
         stock = stock,
         price = price
     )
