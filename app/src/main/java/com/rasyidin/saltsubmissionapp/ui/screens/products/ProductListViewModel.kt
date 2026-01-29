@@ -48,8 +48,8 @@ class ProductListViewModel @Inject constructor(repository: ProductRepository): V
         when (action) {
             ProductListAction.Checkout -> performCheckout()
             ProductListAction.ClearCart -> clearChart()
-            is ProductListAction.DecrementProduct -> updateQuantity(action.productId, 1)
-            is ProductListAction.IncrementProduct -> updateQuantity(action.productId, -1)
+            is ProductListAction.DecrementProduct -> updateQuantity(action.productId, -1)
+            is ProductListAction.IncrementProduct -> updateQuantity(action.productId, 1)
             is ProductListAction.SortBy -> sortProducts(action.sort)
         }
     }
@@ -59,22 +59,23 @@ class ProductListViewModel @Inject constructor(repository: ProductRepository): V
     }
 
     private fun updateQuantity(productId: Int, quantity: Int) {
-        state = state.copy(
-            products = state.products.map { product ->
-                if (product.id == productId) {
-                    val newQuantity = product.purchaseQuantity + quantity
-                    val purchaseQuantity = when  {
-                        newQuantity < 0 -> 0
-                        newQuantity > product.stock -> product.stock
-                        else -> newQuantity
-                    }
-                    product.copy(purchaseQuantity = purchaseQuantity)
-                } else {
-                    product
+        val currentProduct = state.products.map { product ->
+            if (product.id == productId) {
+                val newQuantity = product.purchaseQuantity + quantity
+                val purchaseQuantity = when  {
+                    newQuantity < 0 -> 0
+                    newQuantity > product.stock -> product.stock
+                    else -> newQuantity
                 }
-            },
-            totalPrice = state.products.sumOf { it.price * it.purchaseQuantity },
-            enabledCheckoutButton = state.products.any { it.purchaseQuantity > 0 }
+                product.copy(purchaseQuantity = purchaseQuantity)
+            } else {
+                product
+            }
+        }
+        state = state.copy(
+            products = currentProduct,
+            totalPrice = currentProduct.sumOf { it.price * it.purchaseQuantity },
+            enabledCheckoutButton = currentProduct.sumOf { it.purchaseQuantity } > 0
         )
     }
 
@@ -82,6 +83,7 @@ class ProductListViewModel @Inject constructor(repository: ProductRepository): V
         state = state.copy(
             products = state.products.map { it.copy(purchaseQuantity = 0) },
             totalPrice = 0.0,
+            enabledCheckoutButton = false
         )
     }
 
