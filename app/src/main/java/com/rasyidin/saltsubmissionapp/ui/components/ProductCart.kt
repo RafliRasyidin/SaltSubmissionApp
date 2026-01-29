@@ -71,6 +71,7 @@ fun ProductCart(
                 color = Gray500
             )
         }
+        Spacer(Modifier.width(8.dp))
         Row(
             modifier = Modifier
                 .weight(1f)

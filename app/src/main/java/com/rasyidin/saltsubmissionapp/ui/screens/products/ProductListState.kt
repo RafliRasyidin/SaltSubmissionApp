@@ -13,4 +13,5 @@ data class ProductListState(
     val selectedSort: SortByProduct = SortByProduct().setDefault(),
     val totalPrice: Double = 0.0,
     val enabledCheckoutButton: Boolean = false,
+    val showDialog: Boolean = false
 )

@@ -16,7 +16,6 @@ import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.receiveAsFlow
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -47,11 +46,15 @@ class ProductListViewModel @Inject constructor(repository: ProductRepository): V
 
     fun onAction(action: ProductListAction) {
         when (action) {
-            ProductListAction.Checkout -> performCheckout()
+            ProductListAction.Checkout -> state = state.copy(showDialog = true)
             ProductListAction.ClearCart -> clearChart()
             is ProductListAction.DecrementProduct -> updateQuantity(action.productId, -1)
             is ProductListAction.IncrementProduct -> updateQuantity(action.productId, 1)
             is ProductListAction.SortBy -> sortProducts(action.sort)
+            ProductListAction.DismissDialog -> {
+                state = state.copy(showDialog = false)
+                clearChart()
+            }
         }
     }
 
@@ -97,12 +100,6 @@ class ProductListViewModel @Inject constructor(repository: ProductRepository): V
             totalPrice = 0.0,
             enabledCheckoutButton = false
         )
-    }
-
-    private fun performCheckout() {
-        viewModelScope.launch {
-            _events.send(ProductListEvent.ShowSuccessDialog)
-        }
     }
 
 }

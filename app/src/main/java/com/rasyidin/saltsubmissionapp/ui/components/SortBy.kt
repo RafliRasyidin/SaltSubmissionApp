@@ -30,8 +30,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.dropShadow
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.shadow.Shadow
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
@@ -109,9 +109,6 @@ fun SortBy(
                 modifier = Modifier
                     .clip(RoundedCornerShape(8.dp))
                     .background(Color.White)
-                    .dropShadow(RoundedCornerShape(8.dp)) {
-                        radius = 5f
-                    }
             ) {
                 sorts.forEachIndexed { index, sort ->
                     DropdownMenuItem(

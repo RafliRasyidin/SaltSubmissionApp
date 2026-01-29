@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.rasyidin.saltsubmissionapp.R
 import com.rasyidin.saltsubmissionapp.domain.model.Product
@@ -29,6 +30,7 @@ import com.rasyidin.saltsubmissionapp.domain.model.SortByProduct
 import com.rasyidin.saltsubmissionapp.ui.components.Footer
 import com.rasyidin.saltsubmissionapp.ui.components.Header
 import com.rasyidin.saltsubmissionapp.ui.components.Loader
+import com.rasyidin.saltsubmissionapp.ui.components.PopUpDialog
 import com.rasyidin.saltsubmissionapp.ui.components.ProductCart
 import com.rasyidin.saltsubmissionapp.ui.components.SortBy
 import com.rasyidin.saltsubmissionapp.ui.theme.Gray100
@@ -45,7 +47,6 @@ fun ProductListScreen(
     ObserveAsEvents(viewModel.events) { event ->
         when (event) {
             is ProductListEvent.ShowErrorMessage -> Toast.makeText(context, event.message, Toast.LENGTH_SHORT).show()
-            ProductListEvent.ShowSuccessDialog -> {}
         }
     }
     ProductListContent(
@@ -65,6 +66,9 @@ fun ProductListScreen(
         },
         onClearCart = {
             viewModel.onAction(ProductListAction.ClearCart)
+        },
+        onDismissDialog = {
+            viewModel.onAction(ProductListAction.DismissDialog)
         }
     )
 }
@@ -78,6 +82,7 @@ private fun ProductListContent(
     onDecrementClick: (Product) -> Unit,
     onClearCart: () -> Unit,
     onCheckout: () -> Unit,
+    onDismissDialog: () -> Unit,
 ) {
     val listState = rememberLazyListState()
     val scope = rememberCoroutineScope()
@@ -89,7 +94,7 @@ private fun ProductListContent(
         Header(
             title = "Product List",
             body = if (state.products.isNotEmpty()) "${state.products.size} Products" else null,
-            icon = ImageVector.vectorResource(R.drawable.ic_mobile)
+            icon = ImageVector.vectorResource(R.drawable.ic_mobile),
         )
         AnimatedContent(
             targetState = state.isLoading,
@@ -153,6 +158,7 @@ private fun ProductListContent(
                 }
             }
         }
+        HorizontalDivider(thickness = 1.dp, color = Gray100)
         Footer(
             label = "Total",
             value = "Rp. ${state.totalPrice.toRupiah()}",
@@ -163,5 +169,18 @@ private fun ProductListContent(
             enabledPrimaryButton = state.enabledCheckoutButton,
             showSecondaryButton = state.enabledCheckoutButton
         )
+    }
+
+    if (state.showDialog) {
+        Dialog(
+            onDismissRequest = onDismissDialog
+        ) {
+            PopUpDialog(
+                title = "Success!",
+                description = "You have successfully purchase 4 products with total of Rp. 1.225.000. Click close to buy another modems",
+                textButton = "Close",
+                onButtonClick = onDismissDialog
+            )
+        }
     }
 }

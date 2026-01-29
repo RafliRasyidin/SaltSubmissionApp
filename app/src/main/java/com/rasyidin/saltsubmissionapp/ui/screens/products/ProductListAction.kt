@@ -8,4 +8,5 @@ sealed interface ProductListAction {
     data object Checkout: ProductListAction
     data object ClearCart: ProductListAction
     data class SortBy(val sort: SortByProduct): ProductListAction
+    data object DismissDialog: ProductListAction
 }

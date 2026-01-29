@@ -22,9 +22,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             SaltSubmissionAppTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    ProductListScreen(modifier = Modifier.padding(innerPadding))
-                }
+                ProductListScreen(modifier = Modifier.fillMaxSize())
             }
         }
     }
