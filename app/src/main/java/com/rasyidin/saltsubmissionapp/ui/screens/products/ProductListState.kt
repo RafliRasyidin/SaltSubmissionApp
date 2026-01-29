@@ -9,7 +9,7 @@ data class ProductListState(
     val products: List<Product> = emptyList(),
     val isLoading: Boolean = false,
     val sorts: List<SortByProduct> = emptyList(),
-    val selectedSort: SortByProduct = SortByProduct().default,
+    val selectedSort: SortByProduct = SortByProduct().setDefault(),
     val totalPrice: Double = 0.0,
     val enabledCheckoutButton: Boolean = false
 )

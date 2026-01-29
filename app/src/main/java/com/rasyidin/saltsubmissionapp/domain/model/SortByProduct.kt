@@ -6,7 +6,7 @@ data class SortByProduct(
     val id: Int = 0,
     val name: String = ""
 ) {
-    val default = SortByProduct(
+    fun setDefault() = SortByProduct(
         id = Constants.SORT_BY_DEFAULT,
         name = "Default"
     )
