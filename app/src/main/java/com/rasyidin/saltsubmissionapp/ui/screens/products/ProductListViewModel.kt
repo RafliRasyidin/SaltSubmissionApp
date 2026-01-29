@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rasyidin.saltsubmissionapp.domain.model.SortByProduct
 import com.rasyidin.saltsubmissionapp.domain.repository.ProductRepository
+import com.rasyidin.saltsubmissionapp.utils.Constants
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.catch
@@ -55,7 +56,18 @@ class ProductListViewModel @Inject constructor(repository: ProductRepository): V
     }
 
     private fun sortProducts(sort: SortByProduct) {
-
+        val currentSort = state.sorts.first { it.id == sort.id }
+        val currentProducts = state.products
+        val sortedProducts = when (currentSort.id) {
+            Constants.SORT_BY_HIGHEST_PRICE -> currentProducts.sortedByDescending { it.price }
+            Constants.SORT_BY_LOWEST_PRICE -> currentProducts.sortedBy { it.price }
+            Constants.SORT_BY_NAME -> currentProducts.sortedBy { it.name }
+            else -> currentProducts
+        }
+        state = state.copy(
+            products = sortedProducts,
+            selectedSort = currentSort
+        )
     }
 
     private fun updateQuantity(productId: Int, quantity: Int) {
