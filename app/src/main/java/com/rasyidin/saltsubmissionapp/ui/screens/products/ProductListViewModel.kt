@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.rasyidin.saltsubmissionapp.domain.model.SortByProduct
 import com.rasyidin.saltsubmissionapp.domain.repository.ProductRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -49,7 +50,12 @@ class ProductListViewModel @Inject constructor(repository: ProductRepository): V
             ProductListAction.ClearCart -> clearChart()
             is ProductListAction.DecrementProduct -> updateQuantity(action.productId, 1)
             is ProductListAction.IncrementProduct -> updateQuantity(action.productId, -1)
+            is ProductListAction.SortBy -> sortProducts(action.sort)
         }
+    }
+
+    private fun sortProducts(sort: SortByProduct) {
+
     }
 
     private fun updateQuantity(productId: Int, quantity: Int) {

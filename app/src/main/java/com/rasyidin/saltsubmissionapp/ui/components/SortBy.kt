@@ -56,7 +56,7 @@ fun SortBy(
     var expanded by remember { mutableStateOf(false) }
     Row(
         modifier = modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
             imageVector = ImageVector.vectorResource(R.drawable.ic_short),
@@ -179,8 +179,7 @@ fun PreviewSortByExpanded() {
             SortByProduct(1, "Lowest Price"),
             SortByProduct(2, "Name")
         )
-        Surface(
-            color = Color.White,
+        Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(16.dp)

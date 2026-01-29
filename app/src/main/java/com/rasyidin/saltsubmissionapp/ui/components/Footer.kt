@@ -33,7 +33,8 @@ fun Footer(
     onPrimaryButtonClick: () -> Unit = {},
     onSecondaryButtonClick: () -> Unit = {},
     enabledPrimaryButton: Boolean = true,
-    enabledSecondaryButton: Boolean = true
+    enabledSecondaryButton: Boolean = true,
+    showSecondaryButton: Boolean = true
 ) {
     Column(
         modifier = modifier
@@ -66,7 +67,7 @@ fun Footer(
             onClick = onPrimaryButtonClick,
             enabled = enabledPrimaryButton
         )
-        AnimatedVisibility(!secondaryButtonText.isNullOrEmpty()) {
+        AnimatedVisibility(showSecondaryButton) {
             Spacer(Modifier.height(11.dp))
             ButtonOutlinedApp(
                 text = secondaryButtonText.orEmpty(),
@@ -79,7 +80,7 @@ fun Footer(
 
 @Preview(showBackground = true, name = "Full Footer")
 @Composable
-fun PreviewFooterFull() {
+private fun PreviewFooterFull() {
     SaltSubmissionAppTheme {
         Surface(color = Color(0xFFF6F6F6)) { // Gray50
             Footer(
@@ -96,7 +97,7 @@ fun PreviewFooterFull() {
 
 @Preview(showBackground = true, name = "Primary Only")
 @Composable
-fun PreviewFooterPrimaryOnly() {
+private fun PreviewFooterPrimaryOnly() {
     SaltSubmissionAppTheme {
         Surface(color = Color(0xFFF6F6F6)) {
             Footer(
@@ -111,7 +112,7 @@ fun PreviewFooterPrimaryOnly() {
 
 @Preview(showBackground = true, name = "Disabled State")
 @Composable
-fun PreviewFooterDisabled() {
+private fun PreviewFooterDisabled() {
     SaltSubmissionAppTheme {
         Surface(color = Color(0xFFF6F6F6)) {
             Footer(

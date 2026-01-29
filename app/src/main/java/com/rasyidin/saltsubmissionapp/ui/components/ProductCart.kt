@@ -17,21 +17,17 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.rasyidin.saltsubmissionapp.R
 import com.rasyidin.saltsubmissionapp.domain.model.Product
 import com.rasyidin.saltsubmissionapp.ui.theme.Gray100
 import com.rasyidin.saltsubmissionapp.ui.theme.Gray300
@@ -43,7 +39,7 @@ import com.rasyidin.saltsubmissionapp.ui.theme.firaSans
 import com.rasyidin.saltsubmissionapp.utils.toRupiah
 
 @Composable
-fun ProductChart(
+fun ProductCart(
     product: Product,
     modifier: Modifier = Modifier,
     onIncrementClick: () -> Unit = {},
@@ -164,7 +160,7 @@ private fun ProductChartPreview() {
                 verticalArrangement = Arrangement.spacedBy(42.dp)
             ) {
                 items(products, key = { it.id} ) { product ->
-                    ProductChart(product = product)
+                    ProductCart(product = product)
                 }
             }
         }
