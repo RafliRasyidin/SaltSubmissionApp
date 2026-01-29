@@ -90,7 +90,8 @@ class ProductListViewModel @Inject constructor(repository: ProductRepository): V
         state = state.copy(
             products = currentProduct,
             totalPrice = currentProduct.sumOf { it.price * it.purchaseQuantity },
-            enabledCheckoutButton = currentProduct.sumOf { it.purchaseQuantity } > 0
+            enabledCheckoutButton = currentProduct.sumOf { it.purchaseQuantity } > 0,
+            purchasedProductsQuantity = currentProduct.sumOf { it.purchaseQuantity }
         )
     }
 
@@ -98,7 +99,8 @@ class ProductListViewModel @Inject constructor(repository: ProductRepository): V
         state = state.copy(
             products = state.products.map { it.copy(purchaseQuantity = 0) },
             totalPrice = 0.0,
-            enabledCheckoutButton = false
+            enabledCheckoutButton = false,
+            purchasedProductsQuantity = 0
         )
     }
 

@@ -177,7 +177,7 @@ private fun ProductListContent(
         ) {
             PopUpDialog(
                 title = "Success!",
-                description = "You have successfully purchase 4 products with total of Rp. 1.225.000. Click close to buy another modems",
+                description = "You have successfully purchase ${state.purchasedProductsQuantity} products with total of Rp. ${state.totalPrice.toRupiah()}. Click close to buy another modems",
                 textButton = "Close",
                 onButtonClick = onDismissDialog
             )
